@@ -4,6 +4,8 @@ const os = require("os");
 // express module to server RESTful API
 const app = express();
 const basicAuth = require('express-basic-auth')
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
 
 // need swagger-ui-express node module to server swagger compatible web page
 const swaggerUi = require('swagger-ui-express');
@@ -64,6 +66,8 @@ app.use(basicAuth({
 
 app.post(baseURL + '/record-categories/:recordCategoryId/children', (httpRequest, httpResponse) => {
 
+  printCookies(httpRequest);
+
   const recordCategoryIdValue = httpRequest.params.recordCategoryId;
 
   const name = httpRequest.body.name;
@@ -86,6 +90,8 @@ app.post(baseURL + '/record-categories/:recordCategoryId/children', (httpRequest
 
 app.post(baseURL + '/files/:docId/declare', (httpRequest, httpResponse) => {
 
+  printCookies(httpRequest);
+
   const docIdValue = httpRequest.params.docId;
 
   const hideRecordFlag = httpRequest.query.hideRecord;
@@ -107,6 +113,8 @@ app.post(baseURL + '/files/:docId/declare', (httpRequest, httpResponse) => {
 
 app.post(baseURL + '/files/:docId/complete', (httpRequest, httpResponse) => {
 
+  printCookies(httpRequest);
+
   const docIdValue = httpRequest.params.docId;
 
   let responseObj = {};
@@ -122,6 +130,8 @@ app.post(baseURL + '/files/:docId/complete', (httpRequest, httpResponse) => {
 })
 
 app.post('/alfresco/s/api/rma/actions/ExecutionQueue', (httpRequest, httpResponse) => {
+
+  printCookies(httpRequest);
 
   const name = httpRequest.body.name;
   const nodeRef = httpRequest.body.nodeRef;
@@ -141,6 +151,8 @@ app.post('/alfresco/s/api/rma/actions/ExecutionQueue', (httpRequest, httpRespons
 
 app.put(baseURL + '/records/:recordId', (httpRequest, httpResponse) => {
 
+  printCookies(httpRequest);
+  
   const recordIdValue = httpRequest.params.recordId;
   const inputProperties = httpRequest.body.properties;
   const dateFieldValue = inputProperties["rma:dateField"];
@@ -166,4 +178,8 @@ app.listen(portNumber, () => console.log(`Server started on port ${portNumber}`)
 const getHostName = () => {
 
   return os.hostname();
+}
+
+const printCookies = (httpRequest) => {
+  console.log(httpRequest.cookies['AWSALB']);
 }
