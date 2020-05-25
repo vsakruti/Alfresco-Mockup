@@ -181,5 +181,6 @@ const getHostName = () => {
 }
 
 const printCookies = (httpRequest) => {
-  console.log(httpRequest.cookies['AWSALB']);
+  console.log("All Cookies:" + JSON.stringify(httpRequest.cookies));
+  console.log("All Headers:" + JSON.stringify(httpRequest.headers));
 }
