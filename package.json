@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "forever start src/server.js --uid alfresco_api",
+    "start": "forever start src/server.js >> ./mockapi.log --uid alfresco_api",
     "stop": "forever stop src/server.js"
   },
   "author": "Venkat Sakruti",
